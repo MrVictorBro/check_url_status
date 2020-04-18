@@ -19,31 +19,43 @@ def get_code(url,headers={'User-agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64)'}):
         print(e)
         return ""
 
-def get_url(data):
-    for url in data:
-        url = url.rstrip()
-        code = get_code(url)
-        print(url, code)
-
 def parse_args():
     parser = argparse.ArgumentParser(description='check_url_status')
 
     parser.add_argument(
-        '-f',
-        dest='file',
+        '-fi',
+        dest='file_in',
         type=str,
-        default='file0.txt',
-        help='file name'
+        default='file_in.txt',
+        help='file name in'
+    )
+    parser.add_argument(
+        '-fo',
+        dest='file_out',
+        type=str,
+        default='file_out.txt',
+        help='file name out'
     )
     return parser.parse_args()
 
+def write_file(file_out, data):
+    file_o = open(file_out, "a")
+    file_o.write(data + '\n')
+
 
 if __name__ == '__main__':
-    # file_name = 'file.txt'
-
     args = parse_args()
-    file_name = args.file
+    file_in = args.file_in
+    file_out = args.file_out
 
-    list_url = read_file(file_name)
-    get_url(list_url)
+    list_url = read_file(file_in)
+
+    file_o = open(file_out, "w")
+    for url in list_url:
+        url = url.rstrip()
+        code = get_code(url)
+        data = "{},{}".format(url, code)
+        print(data)
+        write_file(file_out, data)
+
 

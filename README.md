@@ -7,5 +7,6 @@
 
 ##
 ### запуск
-###### python main.py -f file.txt
+###### python main.py -fi file_in.txt -fo file_out.txt
+###### python main.py -file_in file_in.txt -file_out file_out.txt
 
